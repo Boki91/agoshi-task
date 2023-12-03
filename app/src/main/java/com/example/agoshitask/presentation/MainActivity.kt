@@ -1,4 +1,4 @@
-package com.example.agoshitask
+package com.example.agoshitask.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.agoshitask.ui.theme.AgoshiTaskTheme
+import com.example.agoshitask.presentation.ui.theme.AgoshiTaskTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

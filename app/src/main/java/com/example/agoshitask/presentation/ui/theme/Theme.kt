@@ -1,4 +1,4 @@
-package com.example.agoshitask.ui.theme
+package com.example.agoshitask.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

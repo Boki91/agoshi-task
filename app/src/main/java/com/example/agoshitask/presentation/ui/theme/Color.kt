@@ -1,4 +1,4 @@
-package com.example.agoshitask.ui.theme
+package com.example.agoshitask.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
