@@ -8,7 +8,7 @@ data class BeerDto(
     val tagline: String,
     val description: String,
     val first_brewed: String?,
-    val image_url: String
+    val image_url: String?
 )
 
 fun BeerDto.toBeer(): Beer {

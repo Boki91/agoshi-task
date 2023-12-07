@@ -15,7 +15,15 @@ class BeerRepositoryImplementation @Inject constructor(
     private val beerDao: BeerDao
 ) : BeerRepository {
     override suspend fun isRemoteDataAvailable(): Boolean {
-        return beerDao.getAllBeers().firstOrNull()?.isNotEmpty() ?: false
+        return if(beerDao.getAllBeers().firstOrNull()?.isNotEmpty() == true) {
+            true
+        } else {
+            try {
+                return api.getBeers().isNotEmpty()
+            } catch (e: Exception) {
+                return false
+            }
+        }
     }
 
     override suspend fun getRemoteBeers(): List<BeerDto> {

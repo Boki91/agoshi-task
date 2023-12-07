@@ -1,5 +1,6 @@
 package com.example.agoshitask.domain.use_case
 
+import android.util.Log
 import com.example.agoshitask.common.Resource
 import com.example.agoshitask.data.mappers.toBeer
 import com.example.agoshitask.data.remote.dto.toBeer
@@ -29,6 +30,7 @@ class GetBeersUseCase @Inject constructor(
                 }
             }
         } catch (e: Exception) {
+            Log.i("something", "We got it", e)
             val localBeers = repository.getLocalBeers().firstOrNull()
             emit(Resource.Success(localBeers?.map { it.toBeer() } ?: emptyList()))
         }
