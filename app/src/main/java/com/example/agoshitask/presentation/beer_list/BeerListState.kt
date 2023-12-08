@@ -4,5 +4,6 @@ import com.example.agoshitask.domain.model.Beer
 
 data class BeerListState(
     val isLoading: Boolean = false,
-    val beers: List<Beer> = emptyList()
+    val beers: List<Beer> = emptyList(),
+    val error: String = ""
 )

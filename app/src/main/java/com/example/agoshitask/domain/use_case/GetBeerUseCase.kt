@@ -1,12 +1,11 @@
 package com.example.agoshitask.domain.use_case
 
-import android.util.Log
 import com.example.agoshitask.common.Resource
 import com.example.agoshitask.data.mappers.toBeer
-import com.example.agoshitask.data.remote.dto.toBeer
 import com.example.agoshitask.domain.model.Beer
 import com.example.agoshitask.domain.repository.BeerRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -20,17 +19,21 @@ class GetBeersUseCase @Inject constructor(
             val isRemoteDataAvailable = repository.isRemoteDataAvailable()
 
             if (isRemoteDataAvailable) {
-                repository.refreshBeers()
+                val remoteBeers = repository.getRemoteBeers()
+                repository.refreshBeers(remoteBeers)
 
-                val beers = repository.getRemoteBeers().map { it.toBeer() }
-                emit(Resource.Success(beers))
+                val localBeers = repository.getLocalBeers().first()
+                emit(Resource.Success(localBeers.map { it.toBeer() }))
             } else {
-                repository.getLocalBeers().collect { localBeers ->
+                val localBeers = repository.getLocalBeers().first()
+
+                if (localBeers.isNotEmpty()) {
                     emit(Resource.Success(localBeers.map { it.toBeer() }))
+                } else {
+                    emit(Resource.Error("No data available. Check your internet connection"))
                 }
             }
         } catch (e: Exception) {
-            Log.i("something", "We got it", e)
             val localBeers = repository.getLocalBeers().firstOrNull()
             emit(Resource.Success(localBeers?.map { it.toBeer() } ?: emptyList()))
         }

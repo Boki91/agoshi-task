@@ -34,6 +34,11 @@ class BeerListViewModel @Inject constructor(
                 is Resource.NoInternet -> {
                     _state.value = BeerListState(beers = result.data ?: emptyList())
                 }
+                is Resource.Error -> {
+                    _state.value = BeerListState(
+                        error = result.errorMessage ?: "An unexpected error occurred"
+                    )
+                }
             }
         }.launchIn(viewModelScope)
     }

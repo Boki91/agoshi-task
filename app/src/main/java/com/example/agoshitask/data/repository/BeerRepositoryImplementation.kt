@@ -15,7 +15,7 @@ class BeerRepositoryImplementation @Inject constructor(
     private val beerDao: BeerDao
 ) : BeerRepository {
     override suspend fun isRemoteDataAvailable(): Boolean {
-        return if(beerDao.getAllBeers().firstOrNull()?.isNotEmpty() == true) {
+        return if (beerDao.getAllBeers().firstOrNull()?.isNotEmpty() == true) {
             true
         } else {
             try {
@@ -30,16 +30,10 @@ class BeerRepositoryImplementation @Inject constructor(
         return api.getBeers()
     }
 
-    override suspend fun refreshBeers() {
-        try {
-            val remoteData = api.getBeers()
-            val localEntities = remoteData.map { it.toBeerEntity() }
-
-            beerDao.clearAll()
-            beerDao.upsertAll(localEntities)
-        } catch (e: Exception) {
-            // Handle exceptions if needed
-        }
+    override suspend fun refreshBeers(remoteBeers: List<BeerDto>) {
+        val localEntities = remoteBeers.map { it.toBeerEntity() }
+        beerDao.clearAll()
+        beerDao.upsertAll(localEntities)
     }
 
     override suspend fun getLocalBeers(): Flow<List<BeerEntity>> {
