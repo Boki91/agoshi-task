@@ -8,5 +8,5 @@ interface BeerRepository {
     suspend fun refreshBeers(remoteBeers: List<BeerDto>)
     suspend fun getLocalBeers(): Flow<List<BeerEntity>>
     suspend fun getRemoteBeers(): List<BeerDto>
-    suspend fun isRemoteDataAvailable(): Boolean
+    suspend fun isDataAvailable(): Boolean
 }

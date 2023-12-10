@@ -16,9 +16,9 @@ class GetBeersUseCase @Inject constructor(
     operator fun invoke(): Flow<Resource<List<Beer>>> = flow {
         try {
             emit(Resource.Loading())
-            val isRemoteDataAvailable = repository.isRemoteDataAvailable()
+            val isDataAvailable = repository.isDataAvailable()
 
-            if (isRemoteDataAvailable) {
+            if (isDataAvailable) {
                 val remoteBeers = repository.getRemoteBeers()
                 repository.refreshBeers(remoteBeers)
 
